@@ -7,6 +7,9 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('articulos')
 @Controller('articulo')
 export class ArticuloController {
-  constructor(private readonly articuloService: ArticuloService) {}
-
+  constructor(private readonly articuloService: ArticuloService) { }
+  @Get('/listaArticulos')
+  obtenerTodosLosArticulos() {
+    return this.articuloService.obtenerArticulos();
+  }
 }
