@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Articulo } from 'src/articulo/entities/articulo.entity';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Module({
     imports: [
@@ -16,12 +18,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             entities: [
+                Usuario,
+                Articulo
             ],
             ssl: {
                 rejectUnauthorized: false, // esto evita errores de certificado autofirmado
             },
-            synchronize: false,
-            autoLoadEntities: false,
+            synchronize: true,
+            autoLoadEntities: true,
         }),
     ],
     exports: [TypeOrmModule],
