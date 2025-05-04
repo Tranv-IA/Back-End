@@ -9,6 +9,13 @@ import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
 
 @Injectable()
 export class ArticuloService {
+    crearArticuloSinIa(userUid: any, createArticuloDTO: CreateArticuloDto) {
+      throw new Error('Method not implemented.');
+    }
+    crearArticuloIa() {
+      throw new Error('Method not implemented.');
+    }
+
     async obtenerArticulosPorUid(userUid: string) {
         const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
 
