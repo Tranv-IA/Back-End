@@ -25,10 +25,9 @@ export class FirebaseGuard implements CanActivate {
         if (!token) {
             throw new UnauthorizedException('pleace send token');
         }
-        const cleanToken = token.startsWith('Bearer ') ? token.slice(7) : token;
 
         try {
-            const decodedToken = await this.firebaseService.verifyIdToken(cleanToken);
+            const decodedToken = await this.firebaseService.verifyIdToken(token);
             request['userUid'] = decodedToken.uid;
             request['email'] = decodedToken.email;
             return true;
