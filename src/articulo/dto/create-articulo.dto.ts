@@ -1,1 +1,4 @@
-export class CreateArticuloDto {}
+export class CreateArticuloDto {
+
+    
+}
