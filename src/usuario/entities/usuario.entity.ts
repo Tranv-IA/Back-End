@@ -1,9 +1,7 @@
 import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 @Entity("usuarios")
 export class Usuario {
-    @PrimaryGeneratedColumn()
-    id:number;
-    @Column()
+    @PrimaryColumn()
     uidFirebas:string;
     @Column()
     nombre:string;

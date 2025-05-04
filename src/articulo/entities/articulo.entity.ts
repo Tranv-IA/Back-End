@@ -8,7 +8,7 @@ export class Articulo {
     title:string;
     @Column()
     content:string;
-    @ManyToOne(()=>Usuario,(user)=>user.id)
-    @JoinColumn({name:"id_usuario"})
+    @ManyToOne(()=>Usuario,(user)=>user.uidFirebas)
+    @JoinColumn({name:"uid_firebase"})
     usuario:Usuario;
 }
