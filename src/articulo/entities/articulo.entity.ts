@@ -13,6 +13,12 @@ export class Articulo {
     usuario:Usuario;
     @Column({default:false})
     publicado:Boolean;
+    @Column({default:new Date()})
+    fecha_creacion:Date;
+
+    @Column({nullable:true})
+    fecha_publicacion?:Date;
+    
 }
 
 
