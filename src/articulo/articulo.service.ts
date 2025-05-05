@@ -9,17 +9,18 @@ import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
 
 @Injectable()
 export class ArticuloService {
+    async eliminarArticulo(id_articulo: number) {
+        await this.articuloRepository.delete(id_articulo);
+        return JSON.parse('{"message":"articulo eliminado exitosamente"}');
+    }
     async publicarArticulo(id_articulo: number) {
-        const articuloGuardado=await this.articuloRepository.findOneBy({id:id_articulo}) ;
-        if(!articuloGuardado) throw new NotFoundException("No se Encontro el articulo a publicar");
-        articuloGuardado.publicado=true;
-        await this.articuloRepository.update(articuloGuardado.id,articuloGuardado);
+        const articuloGuardado = await this.obtenerArticuloPorId(id_articulo);
+        articuloGuardado.publicado = true;
+        await this.articuloRepository.update(articuloGuardado.id, articuloGuardado);
         return JSON.parse('{"message":"articulo publicado exitosamente"}');
     }
     async crearArticuloSinIa(userUid: string, createArticuloDTO: CreateArticuloDto) {
         const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
-        console.log(createArticuloDTO.title);
-        console.log(createArticuloDTO)
         const articuloPreparado = this.articuloRepository.create({
             title: createArticuloDTO.title,
             content: createArticuloDTO.content,
@@ -75,5 +76,10 @@ export class ArticuloService {
             } as TransferArticuloDTO);
         }
         return listaDeArticulosConFormato;
+    }
+    private async obtenerArticuloPorId(id: number) {
+        const articuloGuardado = await this.articuloRepository.findOneBy({ id: id });
+        if (!articuloGuardado) throw new NotFoundException("No se Encontro el articulo a publicar");
+        return articuloGuardado;
     }
 }

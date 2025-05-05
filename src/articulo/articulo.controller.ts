@@ -39,4 +39,11 @@ export class ArticuloController {
   publicarArticulo(@Query('id', ParseIntPipe) id_articulo: number) {
     return this.articuloService.publicarArticulo(id_articulo);
   }
+
+  @Delete('/eliminarArticulo')
+  @ApiOperation({summary:"Servicio para Eliminar articulos"})
+  @ApiSecurity('firebase-token')
+  eliminarArticulo(@Query('id', ParseIntPipe) id_articulo: number){
+    return this.articuloService.eliminarArticulo(id_articulo);
+  }
 }
