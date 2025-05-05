@@ -42,16 +42,22 @@ export class ArticuloController {
   }
 
   @Delete('/eliminarArticulo')
-  @ApiOperation({summary:"Servicio para Eliminar articulos"})
+  @ApiOperation({ summary: "Servicio para Eliminar articulos" })
   @ApiSecurity('firebase-token')
-  eliminarArticulo(@Query('id', ParseIntPipe) id_articulo: number){
+  eliminarArticulo(@Query('id', ParseIntPipe) id_articulo: number) {
     return this.articuloService.eliminarArticulo(id_articulo);
   }
 
   @Patch('/actualizarArticulo')
-  @ApiOperation({summary:"Servicio para actualizar articulos mediante el id"})
+  @ApiOperation({ summary: "Servicio para actualizar articulos mediante el id" })
   @ApiSecurity('firebase-token')
-  actualizarArtculo(@Query('id', ParseIntPipe) id_articulo: number,@Body() updateArticuloDto:UpdateArticuloDto){
-    return this.articuloService.actualizarArticulo(id_articulo,updateArticuloDto);
+  actualizarArtculo(@Query('id', ParseIntPipe) id_articulo: number, @Body() updateArticuloDto: UpdateArticuloDto) {
+    return this.articuloService.actualizarArticulo(id_articulo, updateArticuloDto);
   }
+  @ApiOperation({summary:"Servicio para obtener un articulo por su id"})
+  @Get('/obtenerArticulo')
+  obtenerArticulo(@Request() req,@Query('id',ParseIntPipe) id_articulo:number){
+    return this.articuloService.obtenerArticuloPorId(id_articulo);
+  }
+
 }
