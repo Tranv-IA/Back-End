@@ -11,4 +11,6 @@ export class Articulo {
     @ManyToOne(()=>Usuario,(user)=>user.uidFirebas)
     @JoinColumn({name:"uid_firebase"})
     usuario:Usuario;
+    @Column()
+    publicado:Boolean;
 }

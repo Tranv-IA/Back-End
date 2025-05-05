@@ -34,6 +34,7 @@ export class ArticuloService {
         const listaDeArticulos = await this.articuloRepository.find({
             loadEagerRelations: true,
             relations: ['usuario'],
+            where:{publicado:true}
         });
         const listaDeArticulosConFormato: TransferArticuloDTO[] = this.formatearArticulos(listaDeArticulos);
         return listaDeArticulosConFormato;
