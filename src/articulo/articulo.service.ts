@@ -9,11 +9,14 @@ import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
 
 @Injectable()
 export class ArticuloService {
-    crearArticuloSinIa(userUid: any, createArticuloDTO: CreateArticuloDto) {
-      throw new Error('Method not implemented.');
+    async crearArticuloSinIa(userUid: string, createArticuloDTO: CreateArticuloDto) {
+        const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
+        const articuloCreado = this.articuloRepository.save({ ...createArticuloDTO, usuario: usuarioEncontrado })
+        if(!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
+        return articuloCreado;
     }
     crearArticuloIa() {
-      throw new Error('Method not implemented.');
+        throw new Error('Method not implemented.');
     }
 
     async obtenerArticulosPorUid(userUid: string) {
@@ -34,7 +37,7 @@ export class ArticuloService {
         const listaDeArticulos = await this.articuloRepository.find({
             loadEagerRelations: true,
             relations: ['usuario'],
-            where:{publicado:true}
+            where: { publicado: true }
         });
         const listaDeArticulosConFormato: TransferArticuloDTO[] = this.formatearArticulos(listaDeArticulos);
         return listaDeArticulosConFormato;
