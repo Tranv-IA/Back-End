@@ -12,20 +12,16 @@ export class CreateArticuloDto {
         )
         @IsString()
         @MinLength(5)
-        @Transform((value) => value.toString().trim())
         @IsNotEmpty()
-        tema: string;
+        title: string;
         
         @ApiProperty(
             {
                 description: "Contenido del articulo en general",
                 example: "IA en la Educacion...",
-                minLength: 120
             }
         )
         @IsString()
-        @MinLength(120)
-        @Transform((value) => value.toString().trim())
         @IsNotEmpty()
         content: string;
 }
