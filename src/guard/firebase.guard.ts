@@ -22,6 +22,7 @@ export class FirebaseGuard implements CanActivate {
 
         const request = context.switchToHttp().getRequest();
         const token = request.headers['authorization'];
+
         if (!token) {
             throw new UnauthorizedException('pleace send token');
         }
@@ -33,6 +34,7 @@ export class FirebaseGuard implements CanActivate {
             request['email'] = decodedToken.email;
             return true;
         } catch (error) {
+            console.log("el error es: ",error)
             throw new UnauthorizedException('invalid Token');
         }
 
