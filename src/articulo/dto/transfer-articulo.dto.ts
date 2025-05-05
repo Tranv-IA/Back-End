@@ -1,6 +1,6 @@
 export class TransferArticuloDTO {
     id:number;
-    titulo: string;
-    contenido: string;
-    autor:string;
+    title: string;
+    content: string;
+    author:string;
 }

@@ -30,8 +30,10 @@ export class ArticuloService {
         return JSON.parse('{"message":"articulo eliminado exitosamente"}');
     }
     async publicarArticulo(id_articulo: number) {
-        const articuloGuardado = await this.obtenerArticuloPorId(id_articulo);
+        const articuloGuardado = await this.articuloRepository.findOneBy({ id: id_articulo });
+        if (!articuloGuardado) throw new NotFoundException("No existe el articulo")
         articuloGuardado.publicado = true;
+        articuloGuardado.fecha_publicacion = new Date();
         await this.articuloRepository.update(articuloGuardado.id, articuloGuardado);
         return JSON.parse('{"message":"articulo publicado exitosamente"}');
     }
@@ -56,8 +58,6 @@ export class ArticuloService {
         const listaDeArticulos = await this.articuloRepository.findBy({ usuario: usuarioEncontrado })
         if (!listaDeArticulos) throw new NotFoundException("Error de conexion");
         if (listaDeArticulos.length === 0) return JSON.parse("{'mesaje':'no tienes articulos creados'}")
-        console.log(listaDeArticulos)
-        console.log(usuarioEncontrado)
         const listaDeArticulosConFormato: TransferArticuloDTO[] = this.formatearArticulos(listaDeArticulos, usuarioEncontrado.nombre);
         return listaDeArticulosConFormato;
     }
@@ -86,16 +86,20 @@ export class ArticuloService {
         for (let articulo of listaDeArticulos) {
             listaDeArticulosConFormato.push({
                 id: articulo.id,
-                titulo: articulo.title,
-                contenido: articulo.content,
-                autor: usuarioEncontrado ?? articulo.usuario.nombre,
+                title: articulo.title,
+                content: articulo.content,
+                author: usuarioEncontrado ?? articulo.usuario.nombre,
+                creationDate:articulo.fecha_creacion,
+                publicationDate:articulo.fecha_publicacion??"Sin publicar"
             } as TransferArticuloDTO);
         }
         return listaDeArticulosConFormato;
     }
     async obtenerArticuloPorId(id: number) {
-        const articuloGuardado = await this.articuloRepository.findOneBy({ id: id });
-        if (!articuloGuardado) throw new NotFoundException("No se Encontro el articulo a publicar");
-        return articuloGuardado;
+        const articuloGuardado = await this.articuloRepository.findOne({ where: { id: id }, relations: ['usuario'] });
+        if (!articuloGuardado) throw new NotFoundException("No se Encontro el articulo");
+        
+        const articuloFormateado = this.formatearArticulos([articuloGuardado]);
+        return articuloFormateado;
     }
 }
