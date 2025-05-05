@@ -21,16 +21,15 @@ export class FirebaseGuard implements CanActivate {
         if (isPublic) return true;
 
         const request = context.switchToHttp().getRequest();
-        console.log("la cabesera es ",request)
         const token = request.headers['authorization'];
-        console.log("El token es: ",token)
 
         if (!token) {
             throw new UnauthorizedException('pleace send token');
         }
+        const cleanToken = token.startsWith('Bearer ') ? token.slice(7) : token;
 
         try {
-            const decodedToken = await this.firebaseService.verifyIdToken(token);
+            const decodedToken = await this.firebaseService.verifyIdToken(cleanToken);
             request['userUid'] = decodedToken.uid;
             request['email'] = decodedToken.email;
             return true;
