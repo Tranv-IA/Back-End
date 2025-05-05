@@ -24,13 +24,19 @@ export class ArticuloController {
   @Post('/createArticulo')
   @ApiOperation({ summary: "Servicio para crear Articulos sin IA" })
   @ApiSecurity('firebase-token')
-  crearArticulo(@Request() req,@Body() createArticuloDTO:CreateArticuloDto) {
-    return this.articuloService.crearArticuloSinIa(req.userUid,createArticuloDTO);
+  crearArticulo(@Request() req, @Body() createArticuloDTO: CreateArticuloDto) {
+    return this.articuloService.crearArticuloSinIa(req.userUid, createArticuloDTO);
   }
   @Post('/createArticulo/ia')
   @ApiOperation({ summary: "Servicio para crear Articulos con IA" })
   @ApiSecurity('firebase-token')
-  crearArticuloIA(@Request() req,@Body() createPromptIADTO:CreatePromptIADTO) {
-    return this.articuloService.crearArticuloIa ();
+  crearArticuloIA(@Request() req, @Body() createPromptIADTO: CreatePromptIADTO) {
+    return this.articuloService.crearArticuloIa();
+  }
+  @Patch('/publicarArticulo')
+  @ApiOperation({ summary: "Servicio para hacer Publico los Articulos" })
+  @ApiSecurity('firebase-token')
+  publicarArticulo(@Query('id', ParseIntPipe) id_articulo: number) {
+    return this.articuloService.publicarArticulo(id_articulo);
   }
 }

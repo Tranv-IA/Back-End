@@ -9,6 +9,13 @@ import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
 
 @Injectable()
 export class ArticuloService {
+    async publicarArticulo(id_articulo: number) {
+        const articuloGuardado=await this.articuloRepository.findOneBy({id:id_articulo}) ;
+        if(!articuloGuardado) throw new NotFoundException("No se Encontro el articulo a publicar");
+        articuloGuardado.publicado=true;
+        await this.articuloRepository.update(articuloGuardado.id,articuloGuardado);
+        return JSON.parse('{"message":"articulo publicado exitosamente"}');
+    }
     async crearArticuloSinIa(userUid: string, createArticuloDTO: CreateArticuloDto) {
         const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
         console.log(createArticuloDTO.title);
