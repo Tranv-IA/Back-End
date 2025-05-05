@@ -9,6 +9,22 @@ import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
 
 @Injectable()
 export class ArticuloService {
+    async actualizarArticulo(id_articulo: number, updateArticuloDto: UpdateArticuloDto) {
+        // Verifica si el artículo existe
+        const articulo = await this.articuloRepository.findOneBy({ id: id_articulo });
+
+        if (!articulo) {
+            throw new NotFoundException('No se encontró el artículo a actualizar');
+        }
+
+        // Aplica los cambios desde el DTO
+        const articuloActualizado = Object.assign(articulo, updateArticuloDto);
+
+        // Guarda los cambios
+        await this.articuloRepository.save(articuloActualizado);
+
+        return { message: 'Artículo actualizado exitosamente' };
+    }
     async eliminarArticulo(id_articulo: number) {
         await this.articuloRepository.delete(id_articulo);
         return JSON.parse('{"message":"articulo eliminado exitosamente"}');

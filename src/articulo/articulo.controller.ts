@@ -4,6 +4,7 @@ import { CreateArticuloDto } from './dto/create-articulo.dto';
 import { ApiOperation, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { CreatePromptIADTO } from './dto/create-propmt-ia.dto';
+import { UpdateArticuloDto } from './dto/update-articulo.dto';
 
 @ApiTags('articulos')
 @Controller('articulo')
@@ -45,5 +46,12 @@ export class ArticuloController {
   @ApiSecurity('firebase-token')
   eliminarArticulo(@Query('id', ParseIntPipe) id_articulo: number){
     return this.articuloService.eliminarArticulo(id_articulo);
+  }
+
+  @Patch('/actualizarArticulo')
+  @ApiOperation({summary:"Servicio para actualizar articulos mediante el id"})
+  @ApiSecurity('firebase-token')
+  actualizarArtculo(@Query('id', ParseIntPipe) id_articulo: number,@Body() updateArticuloDto:UpdateArticuloDto){
+    return this.articuloService.actualizarArticulo(id_articulo,updateArticuloDto);
   }
 }
