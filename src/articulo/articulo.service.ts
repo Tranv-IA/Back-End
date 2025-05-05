@@ -93,7 +93,7 @@ export class ArticuloService {
         }
         return listaDeArticulosConFormato;
     }
-    private async obtenerArticuloPorId(id: number) {
+    async obtenerArticuloPorId(id: number) {
         const articuloGuardado = await this.articuloRepository.findOneBy({ id: id });
         if (!articuloGuardado) throw new NotFoundException("No se Encontro el articulo a publicar");
         return articuloGuardado;
