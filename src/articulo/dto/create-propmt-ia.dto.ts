@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsString, MinLength, Validate } from "class-validator";
-import { Transform } from "class-transformer";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreatePromptIADTO {
@@ -12,7 +11,6 @@ export class CreatePromptIADTO {
     )
     @IsString()
     @MinLength(5)
-    @Transform((value) => value.toString().trim())
     @IsNotEmpty()
     tema: string;
     
@@ -27,7 +25,6 @@ export class CreatePromptIADTO {
     )
     @IsString()
     @MinLength(5)
-    @Transform((value) => value.toString().trim())
     @IsNotEmpty()
     palabrasClave: string;
 
@@ -41,7 +38,6 @@ export class CreatePromptIADTO {
         }
     ) @IsString()
     @MinLength(5)
-    @Transform((value) => value.toString().trim())
     @IsNotEmpty()
     tonoTexto: string;
 
@@ -54,7 +50,6 @@ export class CreatePromptIADTO {
         }
     ) @IsString()
     @MinLength(5)
-    @Transform((value) => value.toString().trim())
     @IsNotEmpty()
     Longitud: string;
 }
