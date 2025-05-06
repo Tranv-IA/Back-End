@@ -6,6 +6,9 @@ import { Articulo } from './entities/articulo.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { TransferArticuloDTO } from './dto/transfer-articulo.dto';
+import { CreatePromptIADTO } from './dto/create-propmt-ia.dto';
+import { IaIntegrationService } from './ia-integration.service';
+import { title } from 'process';
 
 @Injectable()
 export class ArticuloService {
@@ -48,8 +51,23 @@ export class ArticuloService {
         if (!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
         return JSON.parse('{"message":"articulo creado exitosamente"}');
     }
-    crearArticuloIa() {
-        throw new Error('Method not implemented.');
+    async crearArticuloIa(userUid: string, createPromptIADTO: CreatePromptIADTO) {
+        const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
+        const contenidoGenerado = await this.iaIntegrationService.generateArticle(createPromptIADTO);
+        const articuloPreparado = this.articuloRepository.create({
+            title: `Articulo sobre ${createPromptIADTO.tema}`,
+            content: contenidoGenerado,
+            usuario: usuarioEncontrado
+        });
+        const articuloCreado = await this.articuloRepository.save(articuloPreparado)
+        if (!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
+        return {
+            message: "Articulo creado exitosamente",
+            data:{
+                title: articuloCreado.title,
+                content: contenidoGenerado
+            }
+        };
     }
 
     async obtenerArticulosPorUid(userUid: string) {
@@ -64,7 +82,8 @@ export class ArticuloService {
     constructor(
         @InjectRepository(Articulo)
         private articuloRepository: Repository<Articulo>,
-        private readonly usuarioService: UsuarioService
+        private readonly usuarioService: UsuarioService,
+        private readonly iaIntegrationService: IaIntegrationService
     ) { }
     async obtenerArticulos() {
         const listaDeArticulos = await this.articuloRepository.find({

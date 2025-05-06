@@ -32,7 +32,7 @@ export class ArticuloController {
   @ApiOperation({ summary: "Servicio para crear Articulos con IA" })
   @ApiSecurity('firebase-token')
   crearArticuloIA(@Request() req, @Body() createPromptIADTO: CreatePromptIADTO) {
-    return this.articuloService.crearArticuloIa();
+    return this.articuloService.crearArticuloIa(req.userUid, createPromptIADTO);
   }
   @Patch('/publicarArticulo')
   @ApiOperation({ summary: "Servicio para hacer Publico los Articulos" })
