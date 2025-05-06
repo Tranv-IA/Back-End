@@ -62,11 +62,8 @@ export class ArticuloService {
         const articuloCreado = await this.articuloRepository.save(articuloPreparado)
         if (!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
         return {
-            message: "Articulo creado exitosamente",
-            data:{
                 title: articuloCreado.title,
                 content: contenidoGenerado
-            }
         };
     }
 
