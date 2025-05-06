@@ -56,6 +56,7 @@ export class ArticuloController {
   }
   @ApiOperation({summary:"Servicio para obtener un articulo por su id"})
   @Get('/obtenerArticulo')
+  @ApiSecurity('firebase-token')
   obtenerArticulo(@Request() req,@Query('id',ParseIntPipe) id_articulo:number){
     return this.articuloService.obtenerArticuloPorId(id_articulo);
   }
