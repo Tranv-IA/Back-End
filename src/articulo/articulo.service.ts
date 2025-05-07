@@ -51,18 +51,11 @@ export class ArticuloService {
         if (!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
         return JSON.parse('{"message":"articulo creado exitosamente"}');
     }
-    async crearArticuloIa(userUid: string, createPromptIADTO: CreatePromptIADTO) {
-        const usuarioEncontrado = await this.usuarioService.findOneUid(userUid);
+    async crearArticuloIa(createPromptIADTO: CreatePromptIADTO) {
+
         const contenidoGenerado = await this.iaIntegrationService.generateArticle(createPromptIADTO);
-        const articuloPreparado = this.articuloRepository.create({
-            title: `Articulo sobre ${createPromptIADTO.tema}`,
-            content: contenidoGenerado,
-            usuario: usuarioEncontrado
-        });
-        const articuloCreado = await this.articuloRepository.save(articuloPreparado)
-        if (!articuloCreado) throw new NotFoundException("No se pudo crear el articulo");
         return {
-                title: articuloCreado.title,
+                title: createPromptIADTO.tema,
                 content: contenidoGenerado
         };
     }
