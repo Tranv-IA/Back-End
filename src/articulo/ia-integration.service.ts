@@ -53,12 +53,24 @@ export class IaIntegrationService {
   }
 
   private buildPrompt(promptData: CreatePromptIADTO): string {
+    const obtenerRangoPalabras=(longitud:string)=>{
+      switch(longitud){
+        case 'short':
+          return '300-600 palabras';
+        case 'medium':
+          return '650-800 palabras';
+        case 'long':
+          return '850-1000 palabras';
+        default:
+          return 'Longitud no válida';
+      }
+    }
     return `
       Escribe un artículo con las siguientes características:
       - Tema principal:${promptData.tema}
       - Palabras clave a incluirse: ${promptData.palabrasClave}
       - Tono del articulo: ${promptData.tonoTexto}
-      - Longitud: ${promptData.Longitud === 'corto' ? '300-500 palabras' : '800-1000 palabras'}
+      - Longitud: ${obtenerRangoPalabras(promptData.Longitud)}
       Estructura deseada:
       1. Introducción clara con el planteamineto del tema
       2. Desarrollo con arguemntos sólidos
