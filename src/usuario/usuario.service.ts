@@ -3,7 +3,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
-import { Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 export class UsuarioService {
@@ -29,4 +29,21 @@ export class UsuarioService {
     return usuarioFinded;
   }
 
+  async findAll() {
+    const usuarios = await this.usuarioRepository.find({
+      where: { score: MoreThan(0) },
+    });
+    if (!usuarios || usuarios.length === 0) {
+      throw new NotFoundException("No hay usuarios registrados con score mayor a 0");
+    }
+    return usuarios;
+  }
+
+  async update(userUid: string, score: number) {
+    const usuarioFinded = await this.usuarioRepository.findOneBy({ uidFirebas: userUid });
+    if (!usuarioFinded) throw new NotFoundException("El usuario no se encuantra registrado");
+    usuarioFinded.score += score*10;
+    const usuarioUpdated = await this.usuarioRepository.save(usuarioFinded);
+    return usuarioUpdated;
+  }
 }

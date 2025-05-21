@@ -7,4 +7,6 @@ export class Usuario {
     nombre:string;
     @Column()
     email:string;
+    @Column({default:0})
+    score:number;
 }
