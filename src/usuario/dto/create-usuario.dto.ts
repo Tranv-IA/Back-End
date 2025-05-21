@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDecimal, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsDecimal, IsNotEmpty, IsNumber, IsString, MinLength } from "class-validator";
 
 export class CreateUsuarioDto {
     @ApiProperty({
@@ -11,4 +11,13 @@ export class CreateUsuarioDto {
     @IsNotEmpty()
     @MinLength(10)
     nombre: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    @ApiProperty({
+        description: 'Puntaje del usuario',
+        example: 100,
+        minimum: 0,
+    })
+    score: number;
 }

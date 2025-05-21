@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { ConfigModule } from '@nestjs/config';
 import { PracticaInglesModule } from './practica-ingles/practica-ingles.module';
+import { CategoriaModule } from './categoria/categoria.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { PracticaInglesModule } from './practica-ingles/practica-ingles.module';
     DatabaseModule,
     AuthModule,
     FirebaseModule,
-    PracticaInglesModule
+    PracticaInglesModule,
+    CategoriaModule
   ],
   controllers: [AppController],
   providers: [AppService],
