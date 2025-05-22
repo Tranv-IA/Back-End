@@ -4,6 +4,7 @@ import axios from 'axios';
 import { CreatePromptIADTO } from './dto/create-propmt-ia.dto';
 import { PracticaInglesService } from 'src/practica-ingles/practicI-igles.service';
 import { DataDTO } from 'src/practica-ingles/data.dto';
+import { constrainedMemory } from 'process';
 
 @Injectable()
 export class IaIntegrationService {
@@ -78,6 +79,7 @@ export class IaIntegrationService {
       y ademas dame la respuesta correcta para cada pregunta y la razon por la cual las otras respuestas son incorrectas.
       no me des explicaciones adicionales, solo dame las preguntas y respuestas
       y la razon de las respuestas incorrectas.
+dama siempre en el promt una sola pregunta clara .
       dame todo en formato json como objeto de arreglo con las siguientes propiedades:
         {
     id: 1,
@@ -114,7 +116,6 @@ export class IaIntegrationService {
   },
 ];
 }
-
       Asegúrate de que el JSON sea válido, con comillas dobles en las claves y los valores. Solo dame el JSON, sin explicaciones adicionales.
 
     `
@@ -158,7 +159,6 @@ export class IaIntegrationService {
       }
 
       content = content.trim();
-
       // 🧪 Intenta parsear
       return JSON.parse(content);
     } catch (error) {
