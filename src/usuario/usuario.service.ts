@@ -42,7 +42,7 @@ export class UsuarioService {
   async update(userUid: string, score: number) {
     const usuarioFinded = await this.usuarioRepository.findOneBy({ uidFirebas: userUid });
     if (!usuarioFinded) throw new NotFoundException("El usuario no se encuantra registrado");
-    usuarioFinded.score += score*10;
+    usuarioFinded.score += score;
     const usuarioUpdated = await this.usuarioRepository.save(usuarioFinded);
     return usuarioUpdated;
   }
