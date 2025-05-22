@@ -79,23 +79,41 @@ export class IaIntegrationService {
       no me des explicaciones adicionales, solo dame las preguntas y respuestas
       y la razon de las respuestas incorrectas.
       dame todo en formato json como objeto de arreglo con las siguientes propiedades:
-      {
-        "pregunta": "pregunta en ingles",
-        "respuestas": [
-          {
-            "respuesta": "respuesta correcta",
-            "razon": "razon de la respuesta correcta"
-          },
-          {
-            "respuesta": "respuesta incorrecta 1",
-            "razon": "razon de la respuesta incorrecta 1"
-          },
-          {
-            "respuesta": "respuesta incorrecta 2",
-            "razon": "razon de la respuesta incorrecta 2"
-          }
-        ]
-      }
+        {
+    id: 1,
+    prompt: "She  to the gym every day.",
+    options: [
+      { id: "a", text: "go" },
+      { id: "b", text: "goes" },
+      { id: "c", text: "is going" },
+      { id: "d", text: "gone" }
+    ],
+    correct: "b"
+  },
+  {
+    id: 2,
+    prompt: "Choose the synonym of 'happy':",
+    options: [
+      { id: "a", text: "sad" },
+      { id: "b", text: "joyful" },
+      { id: "c", text: "angry" },
+      { id: "d", text: "tired" }
+    ],
+    correct: "b"
+  },
+  {
+    id: 3,
+    prompt: "I have lived here  2010.",
+    options: [
+      { id: "a", text: "for" },
+      { id: "b", text: "since" },
+      { id: "c", text: "at" },
+      { id: "d", text: "from" }
+    ],
+    correct: "b"
+  },
+];
+}
 
       Asegúrate de que el JSON sea válido, con comillas dobles en las claves y los valores. Solo dame el JSON, sin explicaciones adicionales.
 

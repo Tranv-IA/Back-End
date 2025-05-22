@@ -16,7 +16,8 @@ export class UsuarioService {
       {
         ...createUsuarioDto,
         email: email,
-        uidFirebas: userUid
+        uidFirebas: userUid,
+        score:0
       }
     )
     const userCreated = await this.usuarioRepository.save(user);
