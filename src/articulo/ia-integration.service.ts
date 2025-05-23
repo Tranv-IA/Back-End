@@ -73,12 +73,10 @@ export class IaIntegrationService {
   async buildPromptAprendeIngles(dataDTO: DataDTO): Promise<string> {
     const palabrasClave = await this.practicaInglesService.obtenerMensaje(dataDTO);
     return `
-      generame 10 preguintas en ingles con las siguientes 
-      palabras claves: ${palabrasClave}, adicional a esto 
+      generame 10 preguintas en ingles con palabras claves que concideres oportunas para esta categoria ${dataDTO.category_name} y este nivel de comprencion del idioma ingles ${dataDTO.dificulty_level}. 
       agregale tambien 2 respuestas incorrectas y 1 correcta para cada pregunta
       y ademas dame la respuesta correcta para cada pregunta y la razon por la cual las otras respuestas son incorrectas.
-      no me des explicaciones adicionales, solo dame las preguntas y respuestas
-      y la razon de las respuestas incorrectas.
+      no me des explicaciones adicionales, solo dame las preguntas y respuestas.
 dama siempre en el promt una sola pregunta clara .
       dame todo en formato json como objeto de arreglo con las siguientes propiedades:
         {
