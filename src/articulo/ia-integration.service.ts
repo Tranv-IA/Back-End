@@ -81,7 +81,7 @@ dama siempre en el promt una sola pregunta clara .
       dame todo en formato json como objeto de arreglo con las siguientes propiedades:
         {
     id: 1,
-    prompt: "She  to the gym every day.",
+    prompt: "She ______ to the gym every day.",
     options: [
       { id: "a", text: "go" },
       { id: "b", text: "goes" },
@@ -103,7 +103,7 @@ dama siempre en el promt una sola pregunta clara .
   },
   {
     id: 3,
-    prompt: "I have lived here  2010.",
+    prompt: "I have lived here ______ 2010.",
     options: [
       { id: "a", text: "for" },
       { id: "b", text: "since" },
